@@ -6,7 +6,7 @@
 <div class="album-list">
   {{ range .Pages }}
   <a href="{{ .RelPermalink }}" class="album-card">
-    <div class="album-card-cover">{{ with .Params.cover }}<img src="{{ . }}" alt="{{ $.Title }}">{{ else }}<div class="album-card-placeholder">{{ with .Params.emoji }}{{ . }}{{ else }}📸{{ end }}</div>{{ end }}</div>
+    <div class="album-card-cover">{{ with .Params.cover }}<img src="{{ . | relURL }}" alt="{{ $.Title }}">{{ else }}<div class="album-card-placeholder">{{ with .Params.emoji }}{{ . }}{{ else }}📸{{ end }}</div>{{ end }}</div>
     <div class="album-card-info">
       <h3>{{ .Title }}</h3>
       {{ with .Description }}<p>{{ . }}</p>{{ end }}

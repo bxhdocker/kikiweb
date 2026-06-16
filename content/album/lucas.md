@@ -3,12 +3,12 @@ title: "🧸 Lucas 的相册"
 description: "小王子 Lucas 的成长记录"
 date: 2026-06-16
 emoji: "🧸"
-cover: "/images/album/lucas_02.jpg"
+cover: "images/album/lucas_02.jpg"
 gallery:
-  - src: "/images/album/lucas_01.jpg"
+  - src: "images/album/lucas_01.jpg"
     alt: "刚出生的 Lucas"
     caption: "小手握着大手，来到这个世界的第一天"
-  - src: "/images/album/lucas_02.jpg"
+  - src: "images/album/lucas_02.jpg"
     alt: "爸爸妈妈抱着 Lucas"
     caption: "爸爸妈妈的怀抱，最温暖的港湾"
 milestones:

@@ -9,7 +9,7 @@
     {{ if $gallery }}
       {{ range $gallery }}
       <figure class="gallery-item">
-        <img src="{{ .src }}" alt="{{ .alt }}" loading="lazy">
+        <img src="{{ .src | relURL }}" alt="{{ .alt }}" loading="lazy">
         {{ with .caption }}<figcaption>{{ . }}</figcaption>{{ end }}
       </figure>
       {{ end }}
