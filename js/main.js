@@ -1,6 +1,6 @@
 // Theme toggle
 (function() {
-  const saved = localStorage.getItem('theme');
+  var saved = localStorage.getItem('theme');
   if (saved) {
     document.documentElement.setAttribute('data-theme', saved);
   } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
@@ -10,19 +10,19 @@
   }
 
   document.addEventListener('DOMContentLoaded', function() {
-    const toggle = document.getElementById('themeToggle');
-    if (!toggle) return;
-
-    toggle.addEventListener('click', function() {
-      const current = document.documentElement.getAttribute('data-theme');
-      const next = current === 'dark' ? 'light' : 'dark';
-      document.documentElement.setAttribute('data-theme', next);
-      localStorage.setItem('theme', next);
-    });
+    var toggle = document.getElementById('themeToggle');
+    if (toggle) {
+      toggle.addEventListener('click', function() {
+        var current = document.documentElement.getAttribute('data-theme');
+        var next = current === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+      });
+    }
 
     // Mobile menu
-    const menuToggle = document.getElementById('menuToggle');
-    const nav = document.querySelector('.nav');
+    var menuToggle = document.getElementById('menuToggle');
+    var nav = document.querySelector('.nav');
     if (menuToggle && nav) {
       menuToggle.addEventListener('click', function() {
         nav.classList.toggle('open');
@@ -30,9 +30,9 @@
     }
 
     // Gallery lightbox
-    const galleryItems = document.querySelectorAll('.gallery-item img');
+    var galleryItems = document.querySelectorAll('.gallery-item img');
     if (galleryItems.length > 0) {
-      const lightbox = document.createElement('div');
+      var lightbox = document.createElement('div');
       lightbox.className = 'lightbox';
       lightbox.innerHTML = '<button class="lightbox-close">&times;</button>';
       document.body.appendChild(lightbox);
@@ -40,8 +40,8 @@
       galleryItems.forEach(function(img) {
         img.addEventListener('click', function(e) {
           e.preventDefault();
-          const clone = img.cloneNode(true);
-          const existing = lightbox.querySelector('img');
+          var clone = img.cloneNode(true);
+          var existing = lightbox.querySelector('img');
           if (existing) existing.remove();
           lightbox.insertBefore(clone, lightbox.firstChild);
           lightbox.classList.add('active');
@@ -62,6 +62,30 @@
           document.body.style.overflow = '';
         }
       });
+    }
+
+    // Reading progress bar
+    var progressBar = document.getElementById('readingProgress');
+    if (progressBar) {
+      window.addEventListener('scroll', function() {
+        var scrollTop = window.scrollY;
+        var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        var pct = docHeight > 0 ? Math.min((scrollTop / docHeight) * 100, 100) : 0;
+        progressBar.style.width = pct + '%';
+      }, { passive: true });
+    }
+
+    // Timeline bounce-in via IntersectionObserver
+    var timelineItems = document.querySelectorAll('.timeline-item');
+    if (timelineItems.length > 0) {
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.style.animationPlayState = 'running';
+          }
+        });
+      }, { threshold: 0.15 });
+      timelineItems.forEach(function(item) { observer.observe(item); });
     }
   });
 })();

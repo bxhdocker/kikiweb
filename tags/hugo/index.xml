@@ -9,7 +9,14 @@
 &lt;li&gt;&lt;strong&gt;Markdown 原生支持&lt;/strong&gt; — 用 Markdown 写文章，专注内容本身&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h2 id="项目结构"&gt;项目结构&lt;/h2&gt;
-&lt;pre tabindex="0"&gt;&lt;code&gt;myblog/
+&lt;div class="code-block-wrapper"&gt;
+ &lt;div class="code-block-header"&gt;
+ &lt;span class="code-dot code-dot-red"&gt;&lt;/span&gt;
+ &lt;span class="code-dot code-dot-yellow"&gt;&lt;/span&gt;
+ &lt;span class="code-dot code-dot-green"&gt;&lt;/span&gt;
+ 
+ &lt;/div&gt;
+ &lt;pre&gt;myblog/
 ├── archetypes/ # 内容模板
 ├── assets/ # 需要处理的资源文件
 ├── content/ # Markdown 内容
@@ -17,6 +24,7 @@
 ├── layouts/ # 模板文件
 ├── static/ # 静态文件（直接复制）
 ├── themes/ # 主题
-└── config.toml # 站点配置
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id="github-pages-自动部署"&gt;GitHub Pages 自动部署&lt;/h2&gt;
+└── config.toml # 站点配置&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h2 id="github-pages-自动部署"&gt;GitHub Pages 自动部署&lt;/h2&gt;
 &lt;p&gt;创建 &lt;code&gt;.github/workflows/hugo-deploy.yml&lt;/code&gt;：&lt;/p&gt;</description></item></channel></rss>

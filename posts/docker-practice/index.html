@@ -1,4 +1,4 @@
-<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Docker 容器化实践：从 Dockerfile 到 Compose | Kiki & Lucas</title><meta name=description content="技术博客 & 宝贝成长相册"><link rel=stylesheet href=/kikiweb/css/style.min.2fc9ecbcf90aba607b2f35a02324c76c4a98d6381798cbfe53bdfa38ef12f5d2.css><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;700&family=Fira+Code:wght@400;500&display=swap" rel=stylesheet></head><body><header class=header><div class=header-inner><a href=/kikiweb/ class=logo><span class=logo-icon>🌸</span>
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Docker 容器化实践：从 Dockerfile 到 Compose | Kiki & Lucas</title><meta name=description content="技术博客 & 宝贝成长相册"><link rel=stylesheet href=/kikiweb/css/style.min.f2313ebb3513a7f4fa6cc4a461c928b8856f39b7f7ca4d382cb3f8e891f37972.css><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;700&family=Fira+Code:wght@400;500&display=swap" rel=stylesheet></head><body class=section-posts><div class=reading-progress id=readingProgress></div><header class=header><div class=header-inner><a href=/kikiweb/ class=logo><span class=logo-icon>🌸</span>
 <span class=logo-text>Kiki & Lucas</span></a><nav class=nav><a href=/kikiweb/posts/ class=nav-link>博客</a>
 <a href=/kikiweb/album/ class=nav-link>成长相册</a>
 <a href=/kikiweb/about/ class=nav-link>关于</a></nav><button class=theme-toggle id=themeToggle aria-label=切换主题>
@@ -10,44 +10,48 @@
 <span class=meta-sep>·</span>
 <span>1 分钟阅读</span>
 <span class=meta-sep>·</span>
-<span class=single-tags><a href=/kikiweb/tags/docker/ class=post-tag>Docker</a><a href=/kikiweb/tags/%E5%AE%B9%E5%99%A8/ class=post-tag>容器</a><a href=/kikiweb/tags/devops/ class=post-tag>Devops</a></span></div></header><div class=single-content><p>容器化是现代软件部署的标准方式。本文从零开始，走一遍 Docker 化一个 Go 应用的完整流程。</p><h2 id=编写-dockerfile>编写 Dockerfile</h2><p>多阶段构建是 Go 应用的最佳实践：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-dockerfile data-lang=dockerfile><span class=line><span class=cl><span class=c># 构建阶段</span><span class=err>
-</span></span></span><span class=line><span class=cl><span class=k>FROM</span><span class=w> </span><span class=s>golang:1.22-alpine</span><span class=w> </span><span class=k>AS</span><span class=w> </span><span class=s>builder</span><span class=err>
-</span></span></span><span class=line><span class=cl><span class=k>WORKDIR</span><span class=w> </span><span class=s>/app</span><span class=err>
-</span></span></span><span class=line><span class=cl><span class=k>COPY</span> go.mod go.sum ./<span class=err>
-</span></span></span><span class=line><span class=cl><span class=k>RUN</span> go mod download<span class=err>
-</span></span></span><span class=line><span class=cl><span class=k>COPY</span> . .<span class=err>
-</span></span></span><span class=line><span class=cl><span class=k>RUN</span> <span class=nv>CGO_ENABLED</span><span class=o>=</span><span class=m>0</span> go build -o server .<span class=err>
-</span></span></span><span class=line><span class=cl><span class=err>
-</span></span></span><span class=line><span class=cl><span class=c># 运行阶段</span><span class=err>
-</span></span></span><span class=line><span class=cl><span class=k>FROM</span><span class=w> </span><span class=s>alpine:3.19</span><span class=err>
-</span></span></span><span class=line><span class=cl><span class=k>RUN</span> apk add --no-cache ca-certificates<span class=err>
-</span></span></span><span class=line><span class=cl><span class=k>COPY</span> --from<span class=o>=</span>builder /app/server /server<span class=err>
-</span></span></span><span class=line><span class=cl><span class=k>EXPOSE</span><span class=w> </span><span class=s>8080</span><span class=err>
-</span></span></span><span class=line><span class=cl><span class=k>CMD</span> <span class=p>[</span><span class=s2>&#34;/server&#34;</span><span class=p>]</span><span class=err>
-</span></span></span></code></pre></div><p>最终镜像只有约 15MB，非常精简。</p><h2 id=docker-compose-编排>docker-compose 编排</h2><p>多服务应用使用 docker-compose：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=nt>version</span><span class=p>:</span><span class=w> </span><span class=s2>&#34;3.8&#34;</span><span class=w>
-</span></span></span><span class=line><span class=cl><span class=nt>services</span><span class=p>:</span><span class=w>
-</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>app</span><span class=p>:</span><span class=w>
-</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>build</span><span class=p>:</span><span class=w> </span><span class=l>.</span><span class=w>
-</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>ports</span><span class=p>:</span><span class=w>
-</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=s2>&#34;8080:8080&#34;</span><span class=w>
-</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>depends_on</span><span class=p>:</span><span class=w>
-</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>db</span><span class=p>:</span><span class=w>
-</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>condition</span><span class=p>:</span><span class=w> </span><span class=l>service_healthy</span><span class=w>
-</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>environment</span><span class=p>:</span><span class=w>
-</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>DATABASE_URL</span><span class=p>:</span><span class=w> </span><span class=l>postgres://user:pass@db:5432/mydb</span><span class=w>
-</span></span></span><span class=line><span class=cl><span class=w>
-</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>db</span><span class=p>:</span><span class=w>
-</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class=l>postgres:16-alpine</span><span class=w>
-</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>environment</span><span class=p>:</span><span class=w>
-</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>POSTGRES_USER</span><span class=p>:</span><span class=w> </span><span class=l>user</span><span class=w>
-</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>POSTGRES_PASSWORD</span><span class=p>:</span><span class=w> </span><span class=l>pass</span><span class=w>
-</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>volumes</span><span class=p>:</span><span class=w>
-</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=l>pgdata:/var/lib/postgresql/data</span><span class=w>
-</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>healthcheck</span><span class=p>:</span><span class=w>
-</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>test</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=s2>&#34;CMD&#34;</span><span class=p>,</span><span class=w> </span><span class=s2>&#34;pg_isready&#34;</span><span class=p>,</span><span class=w> </span><span class=s2>&#34;-U&#34;</span><span class=p>,</span><span class=w> </span><span class=s2>&#34;user&#34;</span><span class=p>]</span><span class=w>
-</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>interval</span><span class=p>:</span><span class=w> </span><span class=l>5s</span><span class=w>
-</span></span></span><span class=line><span class=cl><span class=w>
-</span></span></span><span class=line><span class=cl><span class=nt>volumes</span><span class=p>:</span><span class=w>
-</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>pgdata</span><span class=p>:</span><span class=w>
-</span></span></span></code></pre></div><h2 id=优化技巧>优化技巧</h2><ol><li><strong>利用构建缓存</strong> — 先 <code>COPY go.mod</code>，再 <code>go mod download</code>，最后 <code>COPY . .</code></li><li><strong>使用 <code>.dockerignore</code></strong> — 排除 <code>node_modules</code>、<code>.git</code> 等无关文件</li><li><strong>非 root 运行</strong> — 在 Dockerfile 中添加 <code>USER 1000</code></li><li><strong>健康检查</strong> — 为关键服务添加 <code>HEALTHCHECK</code> 指令</li></ol><h2 id=总结>总结</h2><p>多阶段构建 + Alpine 基础镜像 = 小而安全的容器。配合 docker-compose，本地开发和生产部署的体验非常一致。</p></div><footer class=single-footer><div class=single-categories>分类：
-<a href=/kikiweb/categories/%E5%9F%BA%E7%A1%80%E8%AE%BE%E6%96%BD/ class=post-tag>基础设施</a></div></footer></article></main><footer class=footer><div class=footer-inner><p>&copy; 2026 Kiki & Lucas · Built with Hugo & 💕</p><p><a href=https://github.com/bxhdocker target=_blank rel=noopener>GitHub</a></p></div></footer><script src=/kikiweb/js/main.min.ccf077e9924a78ec3da3fe67604e0a1d49a859e70339c8b3e9cfd0da317bacea.js></script></body></html>
+<span class=single-tags><a href=/kikiweb/tags/docker/ class=post-tag>Docker</a><a href=/kikiweb/tags/%E5%AE%B9%E5%99%A8/ class=post-tag>容器</a><a href=/kikiweb/tags/devops/ class=post-tag>Devops</a></span></div></header><div class=single-content><p>容器化是现代软件部署的标准方式。本文从零开始，走一遍 Docker 化一个 Go 应用的完整流程。</p><h2 id=编写-dockerfile>编写 Dockerfile</h2><p>多阶段构建是 Go 应用的最佳实践：</p><div class=code-block-wrapper><div class=code-block-header><span class="code-dot code-dot-red"></span>
+<span class="code-dot code-dot-yellow"></span>
+<span class="code-dot code-dot-green"></span>
+<span class=code-lang>dockerfile</span></div><pre># 构建阶段
+FROM golang:1.22-alpine AS builder
+WORKDIR /app
+COPY go.mod go.sum ./
+RUN go mod download
+COPY . .
+RUN CGO_ENABLED=0 go build -o server .
+
+# 运行阶段
+FROM alpine:3.19
+RUN apk add --no-cache ca-certificates
+COPY --from=builder /app/server /server
+EXPOSE 8080
+CMD [&#34;/server&#34;]</pre></div><p>最终镜像只有约 15MB，非常精简。</p><h2 id=docker-compose-编排>docker-compose 编排</h2><p>多服务应用使用 docker-compose：</p><div class=code-block-wrapper><div class=code-block-header><span class="code-dot code-dot-red"></span>
+<span class="code-dot code-dot-yellow"></span>
+<span class="code-dot code-dot-green"></span>
+<span class=code-lang>yaml</span></div><pre>version: &#34;3.8&#34;
+services:
+  app:
+    build: .
+    ports:
+      - &#34;8080:8080&#34;
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgres://user:pass@db:5432/mydb
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: [&#34;CMD&#34;, &#34;pg_isready&#34;, &#34;-U&#34;, &#34;user&#34;]
+      interval: 5s
+
+volumes:
+  pgdata:</pre></div><h2 id=优化技巧>优化技巧</h2><ol><li><strong>利用构建缓存</strong> — 先 <code>COPY go.mod</code>，再 <code>go mod download</code>，最后 <code>COPY . .</code></li><li><strong>使用 <code>.dockerignore</code></strong> — 排除 <code>node_modules</code>、<code>.git</code> 等无关文件</li><li><strong>非 root 运行</strong> — 在 Dockerfile 中添加 <code>USER 1000</code></li><li><strong>健康检查</strong> — 为关键服务添加 <code>HEALTHCHECK</code> 指令</li></ol><h2 id=总结>总结</h2><p>多阶段构建 + Alpine 基础镜像 = 小而安全的容器。配合 docker-compose，本地开发和生产部署的体验非常一致。</p></div><footer class=single-footer><div class=single-categories>分类：
+<a href=/kikiweb/categories/%E5%9F%BA%E7%A1%80%E8%AE%BE%E6%96%BD/ class=post-tag>基础设施</a></div></footer></article></main><footer class=footer><div class=footer-inner><p>&copy; 2026 Kiki & Lucas · Built with Hugo & 💕</p><p><a href=https://github.com/bxhdocker target=_blank rel=noopener>GitHub</a></p></div></footer><script src=/kikiweb/js/main.min.391a93b28385e8021c2e9e6c9c1d73abf3bea968db08ba1b6b9b29933de6e51d.js></script></body></html>
