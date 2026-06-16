@@ -1,0 +1,15 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Goroutine | Kiki & Lucas</title><meta name=description content="技术博客 & 宝贝成长相册"><link rel=stylesheet href=/kikiweb/css/style.min.2fc9ecbcf90aba607b2f35a02324c76c4a98d6381798cbfe53bdfa38ef12f5d2.css><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;700&family=Fira+Code:wght@400;500&display=swap" rel=stylesheet></head><body><header class=header><div class=header-inner><a href=/kikiweb/ class=logo><span class=logo-icon>🌸</span>
+<span class=logo-text>Kiki & Lucas</span></a><nav class=nav><a href=/kikiweb/posts/ class=nav-link>博客</a>
+<a href=/kikiweb/album/ class=nav-link>成长相册</a>
+<a href=/kikiweb/about/ class=nav-link>关于</a></nav><button class=theme-toggle id=themeToggle aria-label=切换主题>
+<span class=sun>☀️</span>
+<span class=moon>🌙</span>
+</button>
+<button class=menu-toggle id=menuToggle aria-label=菜单>
+<span></span><span></span><span></span></button></div></header><main class=main><div class=page-header><h1>Goroutine</h1></div><div class=post-list><article class=post-item><div class=post-item-meta><time datetime=2026-06-10>2026-06-10</time>
+<a href=/kikiweb/tags/go/ class=post-tag>Go</a>
+<a href=/kikiweb/tags/%E5%B9%B6%E5%8F%91/ class=post-tag>并发</a></div><h2 class=post-item-title><a href=/kikiweb/posts/go-concurrency-patterns/>Go 语言中的并发模式：从 Goroutine 到 Channel</a></h2><p class=post-item-summary><p>Go 语言以其简洁的并发模型著称。这篇文章梳理几个核心并发模式的演进思路。</p><h2 id=goroutine轻量级线程>Goroutine：轻量级线程</h2><p>Goroutine 是 Go 并发的基石。它们由 Go 运行时管理，初始栈只有几 KB，可以轻松创建成千上万个：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=kd>func</span><span class=w> </span><span class=nf>main</span><span class=p>()</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>go</span><span class=w> </span><span class=nf>doWork</span><span class=p>()</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=c1>// 主 goroutine 继续执行</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=p>}</span><span class=w>
+</span></span></span></code></pre></div><h2 id=channel通信而非共享内存>Channel：通信而非共享内存</h2><p>Go 的哲学是"不要通 …</p></p><a href=/kikiweb/posts/go-concurrency-patterns/ class=post-item-more>阅读全文 →</a></article></div></main><footer class=footer><div class=footer-inner><p>&copy; 2026 Kiki & Lucas · Built with Hugo & 💕</p><p><a href=https://github.com/bxhdocker target=_blank rel=noopener>GitHub</a></p></div></footer><script src=/kikiweb/js/main.min.ccf077e9924a78ec3da3fe67604e0a1d49a859e70339c8b3e9cfd0da317bacea.js></script></body></html>

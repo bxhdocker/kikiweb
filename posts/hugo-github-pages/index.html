@@ -1,0 +1,42 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>使用 Hugo + GitHub Pages 搭建个人博客 | Kiki & Lucas</title><meta name=description content="技术博客 & 宝贝成长相册"><link rel=stylesheet href=/kikiweb/css/style.min.2fc9ecbcf90aba607b2f35a02324c76c4a98d6381798cbfe53bdfa38ef12f5d2.css><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;700&family=Fira+Code:wght@400;500&display=swap" rel=stylesheet></head><body><header class=header><div class=header-inner><a href=/kikiweb/ class=logo><span class=logo-icon>🌸</span>
+<span class=logo-text>Kiki & Lucas</span></a><nav class=nav><a href=/kikiweb/posts/ class=nav-link>博客</a>
+<a href=/kikiweb/album/ class=nav-link>成长相册</a>
+<a href=/kikiweb/about/ class=nav-link>关于</a></nav><button class=theme-toggle id=themeToggle aria-label=切换主题>
+<span class=sun>☀️</span>
+<span class=moon>🌙</span>
+</button>
+<button class=menu-toggle id=menuToggle aria-label=菜单>
+<span></span><span></span><span></span></button></div></header><main class=main><article class=single-post><header class=single-header><h1>使用 Hugo + GitHub Pages 搭建个人博客</h1><div class=single-meta><time datetime=2026-06-16>2026年6月16日</time>
+<span class=meta-sep>·</span>
+<span>1 分钟阅读</span>
+<span class=meta-sep>·</span>
+<span class=single-tags><a href=/kikiweb/tags/hugo/ class=post-tag>Hugo</a><a href=/kikiweb/tags/github-pages/ class=post-tag>Github-Pages</a><a href=/kikiweb/tags/%E5%8D%9A%E5%AE%A2/ class=post-tag>博客</a></span></div></header><div class=single-content><p>Hugo 是一个用 Go 编写的静态网站生成器，以构建速度快著称。配合 GitHub Pages 和 GitHub Actions，可以轻松实现免费的个人博客部署。</p><h2 id=为什么选择-hugo>为什么选择 Hugo？</h2><p>Hugo 有几个显著优点：</p><ol><li><strong>极快的构建速度</strong> — 数百篇文章在毫秒级完成构建</li><li><strong>单一二进制文件</strong> — 无需安装依赖，一个文件即可运行</li><li><strong>强大的模板系统</strong> — 基于 Go template，灵活且高性能</li><li><strong>丰富的主题生态</strong> — 社区提供了大量高质量主题</li><li><strong>Markdown 原生支持</strong> — 用 Markdown 写文章，专注内容本身</li></ol><h2 id=项目结构>项目结构</h2><pre tabindex=0><code>myblog/
+├── archetypes/     # 内容模板
+├── assets/         # 需要处理的资源文件
+├── content/        # Markdown 内容
+├── data/           # 数据文件
+├── layouts/        # 模板文件
+├── static/         # 静态文件（直接复制）
+├── themes/         # 主题
+└── config.toml     # 站点配置
+</code></pre><h2 id=github-pages-自动部署>GitHub Pages 自动部署</h2><p>创建 <code>.github/workflows/hugo-deploy.yml</code>：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Deploy to GitHub Pages</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=nt>on</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>push</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>branches</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>main]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=nt>jobs</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>deploy</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>runs-on</span><span class=p>:</span><span class=w> </span><span class=l>ubuntu-latest</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>steps</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>uses</span><span class=p>:</span><span class=w> </span><span class=l>actions/checkout@v4</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>uses</span><span class=p>:</span><span class=w> </span><span class=l>peaceiris/actions-hugo@v2</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>with</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>hugo-version</span><span class=p>:</span><span class=w> </span><span class=s1>&#39;latest&#39;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>run</span><span class=p>:</span><span class=w> </span><span class=l>hugo --minify</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>uses</span><span class=p>:</span><span class=w> </span><span class=l>peaceiris/actions-gh-pages@v3</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>with</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>github_token</span><span class=p>:</span><span class=w> </span><span class=l>${{ secrets.GITHUB_TOKEN }}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>publish_dir</span><span class=p>:</span><span class=w> </span><span class=l>./public</span><span class=w>
+</span></span></span></code></pre></div><p>每次推送代码到 <code>main</code> 分支，GitHub Actions 就会自动构建并部署站点。</p><h2 id=自定义主题>自定义主题</h2><p>Hugo 的模板系统非常灵活。你可以从零开始编写一个完全符合自己审美的主题，只需在 <code>layouts/</code> 目录下创建对应的模板文件。</p><p>关键模板文件：</p><table><thead><tr><th>文件</th><th>作用</th></tr></thead><tbody><tr><td><code>layouts/_default/baseof.html</code></td><td>基础框架</td></tr><tr><td><code>layouts/index.html</code></td><td>首页</td></tr><tr><td><code>layouts/_default/single.html</code></td><td>单篇文章</td></tr><tr><td><code>layouts/_default/list.html</code></td><td>列表页</td></tr><tr><td><code>layouts/partials/</code></td><td>可复用的组件</td></tr></tbody></table><h2 id=总结>总结</h2><p>Hugo + GitHub Pages 是一种低成本、高性能的个人博客方案。不需要服务器，不需要数据库，完全免费，还能享受 GitHub 的全球 CDN 加速。</p></div><footer class=single-footer><div class=single-categories>分类：
+<a href=/kikiweb/categories/%E6%95%99%E7%A8%8B/ class=post-tag>教程</a></div></footer></article></main><footer class=footer><div class=footer-inner><p>&copy; 2026 Kiki & Lucas · Built with Hugo & 💕</p><p><a href=https://github.com/bxhdocker target=_blank rel=noopener>GitHub</a></p></div></footer><script src=/kikiweb/js/main.min.ccf077e9924a78ec3da3fe67604e0a1d49a859e70339c8b3e9cfd0da317bacea.js></script></body></html>

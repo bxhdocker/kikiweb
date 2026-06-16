@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Github-Pages on Kiki &amp; Lucas</title><link>https://bxhdocker.github.io/kikiweb/tags/github-pages/</link><description>Recent content in Github-Pages on Kiki &amp; Lucas</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Tue, 16 Jun 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://bxhdocker.github.io/kikiweb/tags/github-pages/index.xml" rel="self" type="application/rss+xml"/><item><title>使用 Hugo + GitHub Pages 搭建个人博客</title><link>https://bxhdocker.github.io/kikiweb/posts/hugo-github-pages/</link><pubDate>Tue, 16 Jun 2026 00:00:00 +0000</pubDate><guid>https://bxhdocker.github.io/kikiweb/posts/hugo-github-pages/</guid><description>&lt;p&gt;Hugo 是一个用 Go 编写的静态网站生成器，以构建速度快著称。配合 GitHub Pages 和 GitHub Actions，可以轻松实现免费的个人博客部署。&lt;/p&gt;
+&lt;h2 id="为什么选择-hugo"&gt;为什么选择 Hugo？&lt;/h2&gt;
+&lt;p&gt;Hugo 有几个显著优点：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;极快的构建速度&lt;/strong&gt; — 数百篇文章在毫秒级完成构建&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;单一二进制文件&lt;/strong&gt; — 无需安装依赖，一个文件即可运行&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;强大的模板系统&lt;/strong&gt; — 基于 Go template，灵活且高性能&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;丰富的主题生态&lt;/strong&gt; — 社区提供了大量高质量主题&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Markdown 原生支持&lt;/strong&gt; — 用 Markdown 写文章，专注内容本身&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="项目结构"&gt;项目结构&lt;/h2&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;myblog/
+├── archetypes/ # 内容模板
+├── assets/ # 需要处理的资源文件
+├── content/ # Markdown 内容
+├── data/ # 数据文件
+├── layouts/ # 模板文件
+├── static/ # 静态文件（直接复制）
+├── themes/ # 主题
+└── config.toml # 站点配置
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id="github-pages-自动部署"&gt;GitHub Pages 自动部署&lt;/h2&gt;
+&lt;p&gt;创建 &lt;code&gt;.github/workflows/hugo-deploy.yml&lt;/code&gt;：&lt;/p&gt;</description></item></channel></rss>
