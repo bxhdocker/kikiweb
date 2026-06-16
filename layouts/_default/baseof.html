@@ -3,7 +3,10 @@
 <head>
   {{ partial "head.html" . }}
 </head>
-<body>
+<body class="section-{{ .Section }}">
+  {{ if eq .Section "posts" }}
+  <div class="reading-progress" id="readingProgress"></div>
+  {{ end }}
   {{ partial "header.html" . }}
   <main class="main">
     {{ block "main" . }}{{ end }}

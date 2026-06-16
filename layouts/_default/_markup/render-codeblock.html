@@ -1,0 +1,9 @@
+<div class="code-block-wrapper">
+  <div class="code-block-header">
+    <span class="code-dot code-dot-red"></span>
+    <span class="code-dot code-dot-yellow"></span>
+    <span class="code-dot code-dot-green"></span>
+    {{ with .Type }}<span class="code-lang">{{ . }}</span>{{ end }}
+  </div>
+  <pre>{{ .Inner }}</pre>
+</div>
