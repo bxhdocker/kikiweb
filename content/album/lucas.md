@@ -3,8 +3,14 @@ title: "🧸 Lucas 的相册"
 description: "小王子 Lucas 的成长记录"
 date: 2026-06-16
 emoji: "🧸"
-cover: ""
-gallery: []
+cover: "/images/album/lucas_02.jpg"
+gallery:
+  - src: "/images/album/lucas_01.jpg"
+    alt: "刚出生的 Lucas"
+    caption: "小手握着大手，来到这个世界的第一天"
+  - src: "/images/album/lucas_02.jpg"
+    alt: "爸爸妈妈抱着 Lucas"
+    caption: "爸爸妈妈的怀抱，最温暖的港湾"
 milestones:
   - date: "2024年2月"
     title: "Lucas 来啦！"
@@ -23,10 +29,10 @@ milestones:
     description: "踉踉跄跄地走向姐姐，Kiki 开心得大叫。"
   - date: "2025年8月"
     title: "词汇大爆发"
-    description: "从「妈妈」「爸爸」到「姐姐」「车车」「狗狗」，每天都在学新词。"
+    description: 从「妈妈」「爸爸」到「姐姐」「车车」「狗狗」，每天都在学新词。
   - date: "2025年12月"
     title: "第一个圣诞节"
-    description: "看到圣诞树上的彩灯，眼睛瞪得大大的，「哇」了一晚上。"
+    description: 看到圣诞树上的彩灯，眼睛瞪得大大的，「哇」了一晚上。
   - date: "2026年2月"
     title: "2岁啦！"
     description: "两岁的 Lucas 最爱跟着姐姐到处跑，姐姐做什么他就做什么，是姐姐的忠实小跟班。"
