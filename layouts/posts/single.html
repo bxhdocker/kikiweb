@@ -1,0 +1,29 @@
+{{ define "main" }}
+<article class="single-post">
+  <header class="single-header">
+    <h1>{{ .Title }}</h1>
+    <div class="single-meta">
+      <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006年1月2日" }}</time>
+      <span class="meta-sep">·</span>
+      <span>{{ .ReadingTime }} 分钟阅读</span>
+      {{ with .GetTerms "tags" }}
+      <span class="meta-sep">·</span>
+      <span class="single-tags">
+        {{ range . }}<a href="{{ .RelPermalink }}" class="post-tag">{{ .LinkTitle }}</a>{{ end }}
+      </span>
+      {{ end }}
+    </div>
+  </header>
+  <div class="single-content">
+    {{ .Content }}
+  </div>
+  <footer class="single-footer">
+    {{ with .GetTerms "categories" }}
+    <div class="single-categories">
+      分类：
+      {{ range . }}<a href="{{ .RelPermalink }}" class="post-tag">{{ .LinkTitle }}</a>{{ end }}
+    </div>
+    {{ end }}
+  </footer>
+</article>
+{{ end }}

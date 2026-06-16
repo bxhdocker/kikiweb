@@ -1,0 +1,20 @@
+<header class="header">
+  <div class="header-inner">
+    <a href="{{ .Site.Home.RelPermalink }}" class="logo">
+      <span class="logo-icon">🌸</span>
+      <span class="logo-text">{{ .Site.Title }}</span>
+    </a>
+    <nav class="nav">
+      {{ range .Site.Menus.main }}
+      <a href="{{ .URL }}" class="nav-link{{ if $.IsMenuCurrent "main" . }} active{{ end }}">{{ .Name }}</a>
+      {{ end }}
+    </nav>
+    <button class="theme-toggle" id="themeToggle" aria-label="切换主题">
+      <span class="sun">☀️</span>
+      <span class="moon">🌙</span>
+    </button>
+    <button class="menu-toggle" id="menuToggle" aria-label="菜单">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>

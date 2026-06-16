@@ -1,0 +1,46 @@
+{{ define "main" }}
+<article class="album-detail">
+  <header class="album-header">
+    <h1>{{ .Title }}</h1>
+    {{ with .Description }}<p class="album-desc">{{ . }}</p>{{ end }}
+  </header>
+  <div class="album-gallery">
+    {{ $gallery := .Params.gallery }}
+    {{ if $gallery }}
+      {{ range $gallery }}
+      <figure class="gallery-item">
+        <img src="{{ .src }}" alt="{{ .alt }}" loading="lazy">
+        {{ with .caption }}<figcaption>{{ . }}</figcaption>{{ end }}
+      </figure>
+      {{ end }}
+    {{ else }}
+    <div class="gallery-empty">
+      <div class="gallery-empty-icon">📸</div>
+      <p>照片即将上线，敬请期待...</p>
+      <p class="gallery-empty-hint">在 <code>static/images/album/</code> 目录下添加照片，然后在内容文件中引用它们。</p>
+    </div>
+    {{ end }}
+  </div>
+
+  {{ if .Params.milestones }}
+  <section class="milestones">
+    <h2>成长里程碑</h2>
+    <div class="timeline">
+      {{ range .Params.milestones }}
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <time class="timeline-date">{{ .date }}</time>
+          <h3>{{ .title }}</h3>
+          <p>{{ .description }}</p>
+          {{ with .photo }}
+          <img src="{{ . }}" alt="{{ $.Title }}" class="timeline-photo" loading="lazy">
+          {{ end }}
+        </div>
+      </div>
+      {{ end }}
+    </div>
+  </section>
+  {{ end }}
+</article>
+{{ end }}

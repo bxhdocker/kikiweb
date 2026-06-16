@@ -1,0 +1,22 @@
+{{ define "main" }}
+<div class="page-header">
+  <h1>{{ .Title }}</h1>
+  {{ with .Description }}<p class="page-desc">{{ . }}</p>{{ end }}
+</div>
+<div class="post-list">
+  {{ range .Paginator.Pages }}
+  <article class="post-item">
+    <div class="post-item-meta">
+      <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>
+      {{ range first 2 (.GetTerms "tags") }}
+      <a href="{{ .RelPermalink }}" class="post-tag">{{ .LinkTitle }}</a>
+      {{ end }}
+    </div>
+    <h2 class="post-item-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+    <p class="post-item-summary">{{ .Summary | truncate 200 }}</p>
+    <a href="{{ .RelPermalink }}" class="post-item-more">阅读全文 →</a>
+  </article>
+  {{ end }}
+</div>
+{{ template "_internal/pagination.html" . }}
+{{ end }}

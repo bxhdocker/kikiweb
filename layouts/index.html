@@ -1,0 +1,79 @@
+{{ define "main" }}
+<section class="hero">
+  <div class="hero-content">
+    <h1 class="hero-title">Hi，我是 <span class="highlight">bxhdocker</span> 👋</h1>
+    <p class="hero-subtitle">这里记录技术点滴，也珍藏孩子们的成长瞬间。</p>
+    <div class="hero-kids">
+      <div class="kid-badge kiki">
+        <span class="kid-avatar">🎀</span>
+        <span class="kid-name">Kiki</span>
+        <span class="kid-age">{{ .Site.Params.kikiAge }}岁</span>
+      </div>
+      <div class="kid-badge lucas">
+        <span class="kid-avatar">🧸</span>
+        <span class="kid-name">Lucas</span>
+        <span class="kid-age">{{ .Site.Params.lucasAge }}岁</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="home-posts">
+  <div class="section-header">
+    <h2 class="section-title">📝 最新文章</h2>
+    {{ with .Site.GetPage "/posts" }}
+    <a href="{{ .RelPermalink }}" class="section-more">全部文章 →</a>
+    {{ end }}
+  </div>
+  <div class="post-grid">
+    {{ $posts := where .Site.RegularPages "Section" "posts" }}
+    {{ range first 6 $posts }}
+    <article class="post-card">
+      <div class="post-card-body">
+        <div class="post-card-meta">
+          <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>
+          {{ range first 1 (.GetTerms "tags") }}
+          <span class="post-tag">{{ .LinkTitle }}</span>
+          {{ end }}
+        </div>
+        <h3 class="post-card-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+        <p class="post-card-summary">{{ .Summary | truncate 120 }}</p>
+      </div>
+    </article>
+    {{ end }}
+  </div>
+</section>
+
+<section class="home-album">
+  <div class="section-header">
+    <h2 class="section-title">📸 成长相册</h2>
+    {{ with .Site.GetPage "/album" }}
+    <a href="{{ .RelPermalink }}" class="section-more">查看全部 →</a>
+    {{ end }}
+  </div>
+  <div class="album-preview-grid">
+    {{ with .Site.GetPage "/album/kiki" }}
+    <a href="{{ .RelPermalink }}" class="album-preview-card kiki-card">
+      <div class="album-preview-bg kiki-bg">
+        <span class="album-preview-icon">🎀</span>
+      </div>
+      <div class="album-preview-info">
+        <h3>Kiki 的相册</h3>
+        <p>小公主的成长记录</p>
+      </div>
+    </a>
+    {{ end }}
+    {{ with .Site.GetPage "/album/lucas" }}
+    <a href="{{ .RelPermalink }}" class="album-preview-card lucas-card">
+      <div class="album-preview-bg lucas-bg">
+        <span class="album-preview-icon">🧸</span>
+      </div>
+      <div class="album-preview-info">
+        <h3>Lucas 的相册</h3>
+        <p>小王子在长大</p>
+      </div>
+    </a>
+    {{ end }}
+  </div>
+</section>
+{{ end }}

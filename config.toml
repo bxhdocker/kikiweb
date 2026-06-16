@@ -1,0 +1,32 @@
+baseURL = "https://bxhdocker.github.io/kikiweb/"
+locale = "zh-cn"
+title = "Kiki & Lucas"
+
+[params]
+  description = "技术博客 & 宝贝成长相册"
+  author = "bxhdocker"
+  github = "https://github.com/bxhdocker"
+  kikiAge = 5
+  lucasAge = 3
+
+[menu]
+  [[menu.main]]
+    name = "博客"
+    url = "/posts/"
+    weight = 1
+  [[menu.main]]
+    name = "成长相册"
+    url = "/album/"
+    weight = 2
+  [[menu.main]]
+    name = "关于"
+    url = "/about/"
+    weight = 3
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+  [markup.highlight]
+    style = "github"
+    noClasses = false

@@ -1,0 +1,17 @@
+{{ define "main" }}
+<div class="page-header">
+  <h1>{{ .Title }}</h1>
+  {{ with .Description }}<p class="page-desc">{{ . }}</p>{{ end }}
+</div>
+<div class="album-list">
+  {{ range .Pages }}
+  <a href="{{ .RelPermalink }}" class="album-card">
+    <div class="album-card-cover">{{ with .Params.cover }}<img src="{{ . }}" alt="{{ $.Title }}">{{ else }}<div class="album-card-placeholder">{{ with .Params.emoji }}{{ . }}{{ else }}📸{{ end }}</div>{{ end }}</div>
+    <div class="album-card-info">
+      <h3>{{ .Title }}</h3>
+      {{ with .Description }}<p>{{ . }}</p>{{ end }}
+    </div>
+  </a>
+  {{ end }}
+</div>
+{{ end }}
